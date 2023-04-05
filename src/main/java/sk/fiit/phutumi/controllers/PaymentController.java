@@ -22,7 +22,7 @@ public class PaymentController {
     ShoppingCardRepository shoppingCardRepository;
     public static final Logger LOGGER = Logger.getLogger(PaymentController.class.getName());
 
-    @RequestMapping(value = "shoppingCart", method = RequestMethod.GET, consumes = "application/json")
+    @RequestMapping(value = "shoppingCart", method = RequestMethod.GET)
 
     public @ResponseBody Order getItem(@RequestParam("orderId") Long orderId) {
         //System.out.println(orderId);
@@ -39,7 +39,7 @@ public class PaymentController {
             String input = scan.next();
 
 
-            if(input.equals("a")){
+            if(input.equals("y")){
                 orderToPay.setProcessed(true);
                 orderRepository.save(orderToPay);
                 LOGGER.log(Level.INFO, "--- payment confirmed for order: "+ orderId);

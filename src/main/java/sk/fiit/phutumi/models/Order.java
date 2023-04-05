@@ -20,7 +20,7 @@ public class Order {
     @Column(name = "created_at", nullable = false, updatable = false)
     private Date createdAt;
 
-    @Column(name="processed")
+    @Column(name = "processed")
     private boolean processed;
 
     public Order() {
@@ -44,5 +44,7 @@ public class Order {
         return processed;
     }
 
-    public void setProcessed(boolean processed) {this.processed = processed;}
+    public void setProcessed(boolean processed) {
+        this.processed = processed;
+    }
 }
