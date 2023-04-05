@@ -17,10 +17,10 @@ public class FoodController {
 
     public static final Logger LOGGER = Logger.getLogger(FoodController.class.getName());
 
-    Map <String, String> foodList = new HashMap<>();
+    Map<String, String> foodList = new HashMap<>();
 
     @GetMapping("/food")
-    public Map<String,String> foodOffer(@RequestParam Map<String, String> restaurantId){
+    public Map<String, String> foodOffer(@RequestParam Map<String, String> restaurantId) {
         System.out.println(restaurantId);
 
         foodList.put("1", "Halusky");
@@ -30,7 +30,7 @@ public class FoodController {
         foodList.put("5", "Spagety");
         foodList.put("6", "Sushi");
 
-        LOGGER.log(Level.INFO,"---- in GET endpoint /food, restaurant ID: {0}", restaurantId.get("restaurantId"));
+        LOGGER.log(Level.INFO, "---- in GET endpoint /food, restaurant ID: {0}", restaurantId.get("restaurantId"));
 
         return foodList;
     }

@@ -21,26 +21,26 @@ import java.util.logging.Logger;
 public class PaymentController {
     @Autowired
     OrderRepository orderRepository;
+    @Autowired
     ShoppingCardRepository shoppingCardRepository;
-    public static final Logger LOGGER = Logger.getLogger(OrderController.class.getName());
+    public static final Logger LOGGER = Logger.getLogger(PaymentController.class.getName());
 
-    @RequestMapping(value ="shoppingCart", method = RequestMethod.GET,consumes = "application/json")
+    @RequestMapping(value = "shoppingCart", method = RequestMethod.GET, consumes = "application/json")
 
     public @ResponseBody Order getItem(@RequestParam("orderId") Long orderId) {
         //System.out.println(orderId);
-        LOGGER.log(Level.INFO, "--- payment request for order: "+ orderId);
+        LOGGER.log(Level.INFO, "--- payment request for order: " + orderId);
 
         Order orderToPay = orderRepository.findById(orderId).orElse(null);
 
-        System.out.println("Chcete zaplatiť objednávku? (a=áno)");
+        System.out.println("Do you want to pay for the order (y=yes)");
         Scanner scan = new Scanner(System.in);
         String input = scan.nextLine();
 
-        if(input == "a"){
-            LOGGER.log(Level.INFO, "--- payment confirmed for order: "+ orderId);
-        }
-        else{
-            LOGGER.log(Level.INFO, "--- payment cancelled for order: "+ orderId);
+        if (input == "y") {
+            LOGGER.log(Level.INFO, "--- payment confirmed for order: " + orderId);
+        } else {
+            LOGGER.log(Level.INFO, "--- payment cancelled for order: " + orderId);
         }
 
         return orderToPay;

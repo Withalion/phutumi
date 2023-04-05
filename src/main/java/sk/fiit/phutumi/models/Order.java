@@ -16,7 +16,7 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @CurrentTimestamp( timing = GenerationTiming.INSERT )
+    @CurrentTimestamp(timing = GenerationTiming.INSERT)
     @Column(name = "created_at", nullable = false, updatable = false)
     private Date createdAt;
 

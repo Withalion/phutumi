@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import org.springframework.data.annotation.Id;
 
 @Entity
-@Table(name="foods")
+@Table(name = "foods")
 public class Food {
 
     @jakarta.persistence.Id
@@ -19,7 +19,7 @@ public class Food {
 
     }
 
-    public Food(Long id, String name){
+    public Food(Long id, String name) {
         this.id = id;
         this.name = name;
     }

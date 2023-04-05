@@ -41,9 +41,9 @@ public class OrderController {
                 LOGGER.log(Level.SEVERE, "--- Order not created");
                 return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
             }
-        }else{
+        } else {
             Optional<Order> orderDB = orderRepository.findById(orderId);
-            if (orderDB.isEmpty()){
+            if (orderDB.isEmpty()) {
                 LOGGER.log(Level.SEVERE, "--- order ID provided in request body is not in DB");
                 return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
             }
