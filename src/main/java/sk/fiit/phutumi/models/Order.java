@@ -20,12 +20,16 @@ public class Order {
     @Column(name = "created_at", nullable = false, updatable = false)
     private Date createdAt;
 
+    @Column(name="processed")
+    private boolean processed;
+
     public Order() {
 
     }
 
-    public Order(Long id) {
+    public Order(Long id, boolean processed) {
         this.id = id;
+        this.processed = processed;
     }
 
     public Long getId() {
@@ -35,4 +39,10 @@ public class Order {
     public void setId(Long id) {
         this.id = id;
     }
+
+    public boolean getProcessed() {
+        return processed;
+    }
+
+    public void setProcessed(boolean processed) {this.processed = processed;}
 }

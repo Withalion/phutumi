@@ -9,10 +9,7 @@ import sk.fiit.phutumi.Repository.ShoppingCardRepository;
 import sk.fiit.phutumi.models.Order;
 import sk.fiit.phutumi.models.ShoppingCart;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Scanner;
+import java.util.*;
 import java.util.function.LongToIntFunction;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -29,20 +26,34 @@ public class PaymentController {
 
     public @ResponseBody Order getItem(@RequestParam("orderId") Long orderId) {
         //System.out.println(orderId);
+
+        LOGGER.log(Level.INFO, "--- payment request for order: "+ orderId);
+
         LOGGER.log(Level.INFO, "--- payment request for order: " + orderId);
 
+
         Order orderToPay = orderRepository.findById(orderId).orElse(null);
+        if (orderToPay.getProcessed() == false){
+            System.out.println("Do you want to pay for the order (y=yes)");
+            Scanner scan = new Scanner(System.in);
+            String input = scan.next();
 
-        System.out.println("Do you want to pay for the order (y=yes)");
-        Scanner scan = new Scanner(System.in);
-        String input = scan.nextLine();
 
-        if (input == "y") {
-            LOGGER.log(Level.INFO, "--- payment confirmed for order: " + orderId);
-        } else {
-            LOGGER.log(Level.INFO, "--- payment cancelled for order: " + orderId);
+            if(input.equals("a")){
+                orderToPay.setProcessed(true);
+                orderRepository.save(orderToPay);
+                LOGGER.log(Level.INFO, "--- payment confirmed for order: "+ orderId);
+
+                return orderToPay;
+            }
+            else{
+                LOGGER.log(Level.INFO, "--- payment cancelled for order: "+ orderId);
+                return orderToPay;
+            }
         }
-
-        return orderToPay;
+        else {
+            LOGGER.log(Level.INFO, "--- payment already processed for order: " + orderId);
+            return null;
+        }
     }
 }
