@@ -1,16 +1,21 @@
 package sk.fiit.phutumi.controllers;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import sk.fiit.phutumi.Repository.FoodRepository;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @RestController
 public class FoodController {
+
+    @Autowired
+    FoodRepository foodRepository;
+
+    public static final Logger LOGGER = Logger.getLogger(FoodController.class.getName());
 
     Map <String, String> foodList = new HashMap<>();
 
@@ -24,6 +29,8 @@ public class FoodController {
         foodList.put("4", "Parene Buchty");
         foodList.put("5", "Spagety");
         foodList.put("6", "Sushi");
+
+        LOGGER.log(Level.INFO,"---- in GET endpoint /food, restaurant ID: {0}", restaurantId.get("restaurantId"));
 
         return foodList;
     }
