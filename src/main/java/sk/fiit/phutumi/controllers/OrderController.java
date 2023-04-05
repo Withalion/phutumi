@@ -36,7 +36,6 @@ public class OrderController {
                 Order newOrder = orderRepository.save(new Order());
                 orderId = newOrder.getId();
                 LOGGER.log(Level.INFO, "--- Order created");
-//                return new ResponseEntity<>(newOrder, HttpStatus.CREATED);
             } catch (Exception e) {
                 LOGGER.log(Level.SEVERE, "--- Order not created");
                 return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -54,7 +53,7 @@ public class OrderController {
             ShoppingCart newShoppingCart = shoppingCardRepository.save(new ShoppingCart(foodId, orderId));
             return new ResponseEntity<>(newShoppingCart, HttpStatus.CREATED);
         } catch (Exception e) {
-            LOGGER.log(Level.SEVERE, "--- {Probably} food ID provided in request body is not in D}");
+            LOGGER.log(Level.SEVERE, "--- {Probably} food ID provided in request body is not in DB");
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 
         }
