@@ -24,16 +24,18 @@ public class PaymentController {
 
     @RequestMapping(value = "shoppingCart", method = RequestMethod.GET)
 
-    public @ResponseBody Order getItem(@RequestParam("orderId") Long orderId) {
+    public @ResponseBody ResponseEntity<Order> getItem(@RequestParam("orderId") Long orderId) {
         //System.out.println(orderId);
 
         LOGGER.log(Level.INFO, "--- payment request for order: "+ orderId);
 
-        LOGGER.log(Level.INFO, "--- payment request for order: " + orderId);
-
-
         Order orderToPay = orderRepository.findById(orderId).orElse(null);
-        if (orderToPay.getProcessed() == false){
+
+        if (orderToPay == null){
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+
+        if (!orderToPay.getProcessed()){
             System.out.println("Do you want to pay for the order (y=yes)");
             Scanner scan = new Scanner(System.in);
             String input = scan.next();
@@ -44,16 +46,16 @@ public class PaymentController {
                 orderRepository.save(orderToPay);
                 LOGGER.log(Level.INFO, "--- payment confirmed for order: "+ orderId);
 
-                return orderToPay;
+                return new ResponseEntity<>(orderToPay, HttpStatus.OK);
             }
             else{
                 LOGGER.log(Level.INFO, "--- payment cancelled for order: "+ orderId);
-                return orderToPay;
+                return new ResponseEntity<>(orderToPay, HttpStatus.BAD_REQUEST);
             }
         }
         else {
             LOGGER.log(Level.INFO, "--- payment already processed for order: " + orderId);
-            return null;
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
     }
 }
