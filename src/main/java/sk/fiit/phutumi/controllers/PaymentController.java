@@ -22,12 +22,9 @@ public class PaymentController {
     ShoppingCardRepository shoppingCardRepository;
     public static final Logger LOGGER = Logger.getLogger(PaymentController.class.getName());
 
-    @RequestMapping(value = "shoppingCart", method = RequestMethod.GET)
+    @RequestMapping(value = "/phutumi/payOrder", method = RequestMethod.GET)
 
     public @ResponseBody ResponseEntity<Order> getItem(@RequestParam("orderId") Long orderId) {
-        //System.out.println(orderId);
-
-        LOGGER.log(Level.INFO, "--- payment request for order: "+ orderId);
 
         Order orderToPay = orderRepository.findById(orderId).orElse(null);
 

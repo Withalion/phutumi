@@ -4,8 +4,8 @@ import jakarta.persistence.*;
 import org.springframework.data.annotation.Id;
 
 @Entity
-@Table(name = "foods")
-public class Food {
+@Table(name = "restaurants")
+public class Restaurant {
 
     @jakarta.persistence.Id
     @Id
@@ -15,20 +15,15 @@ public class Food {
     @Column(name = "name")
     private String name;
 
-    public Food() {
-
+    public Restaurant() {
     }
 
-    public Food(String name) {
-        this.name = name;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getId() {
+    public long getId() {
         return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -37,13 +32,5 @@ public class Food {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    @Override
-    public String toString() {
-        return "Foods{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                '}';
     }
 }

@@ -22,6 +22,11 @@ public class Menu {
 
     }
 
+    public Menu(Long restaurantId, Long foodId) {
+        this.restaurantId = restaurantId;
+        this.foodId = foodId;
+    }
+
     public Long getRestaurantId() {
         return restaurantId;
     }
@@ -36,5 +41,9 @@ public class Menu {
 
     public void setFoodId(Long foodId) {
         this.foodId = foodId;
+    }
+
+    public long getId() {
+        return id;
     }
 }

@@ -6,8 +6,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import sk.fiit.phutumi.Repository.FoodRepository;
 import sk.fiit.phutumi.Repository.MenuRepository;
-import sk.fiit.phutumi.models.Food;
-import sk.fiit.phutumi.models.Menu;
+import sk.fiit.phutumi.Repository.RestaurantRepository;
+import sk.fiit.phutumi.models.*;
 
 import java.util.*;
 import java.util.logging.Level;
@@ -22,29 +22,20 @@ public class FoodController {
     @Autowired
     MenuRepository menuRepository;
 
+    @Autowired
+    RestaurantRepository restaurantRepository;
 
     public static final Logger LOGGER = Logger.getLogger(FoodController.class.getName());
 
-    Map<String, String> foodList = new HashMap<>();
-
-    @GetMapping("/food")
+    @GetMapping("/phutumi/food")
     public ResponseEntity<List<Food>> foodOffer(@RequestParam Map<String, String> restaurantId) {
-
-        LOGGER.log(Level.INFO, "---- in GET endpoint /food, restaurant ID: {0}", restaurantId.get("restaurantId"));
-
-//        foodList.put("1", "Halusky");
-//        foodList.put("2", "Rezen");
-//        foodList.put("3", "Dukatove Buchticky");
-//        foodList.put("4", "Parene Buchty");
-//        foodList.put("5", "Spagety");
-//        foodList.put("6", "Sushi");
 
         Long resId = Long.valueOf(restaurantId.get("restaurantId"));
         List<Menu> menus = menuRepository.findOnlyFoodIdsByRestaurantId(resId);
 
         List<Long> foodIds = new ArrayList<>();
 
-        if (!menus.isEmpty()){
+        if (!menus.isEmpty()) {
             for (Menu menu : menus) {
                 foodIds.add(menu.getFoodId());
             }
@@ -52,9 +43,39 @@ public class FoodController {
             List<Food> allFoods = foodRepository.findFoodsByIdIn(foodIds);
 
             return new ResponseEntity<>(allFoods, HttpStatus.OK);
-        }else {
+        } else {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
+    }
 
+    @PostMapping(value = "/phutumi/food", consumes = "application/json")
+    public ResponseEntity<Menu> addFood(@RequestBody FoodAdder foodToAdd) {
+
+        String foodName = foodToAdd.getFoodName();
+        Long restaurantId = foodToAdd.getRestaurantId();
+
+        if(!foodName.isEmpty() && restaurantId != null){
+            Optional<Restaurant> restaurant = restaurantRepository.findById(restaurantId);
+            if (restaurant.isPresent()){
+                try{
+                    Food newFood = foodRepository.save(new Food(foodName));
+                    LOGGER.log(Level.SEVERE, "--- new food and menu created");
+
+                    Menu newMenu = menuRepository.save(new Menu(restaurantId, newFood.getId()));
+
+                    return new ResponseEntity<>(newMenu, HttpStatus.CREATED);
+                }catch(Exception e){
+                    LOGGER.log(Level.SEVERE, "--- new food not created");
+                    return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+                }
+            }else{
+                LOGGER.log(Level.SEVERE, "--- restaurantId non existent, new food not created");
+                return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            }
+
+        }else{
+            LOGGER.log(Level.SEVERE, "--- no name in request body, new food not created");
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }

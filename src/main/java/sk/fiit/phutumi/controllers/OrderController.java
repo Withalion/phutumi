@@ -24,7 +24,7 @@ public class OrderController {
 
     public static final Logger LOGGER = Logger.getLogger(OrderController.class.getName());
 
-    @PostMapping(value = "/shoppingCart", consumes = "application/json")
+    @PostMapping(value = "/phutumi/shoppingCart", consumes = "application/json")
     public ResponseEntity<ShoppingCart> shoppingCard(@RequestBody ShoppingCart shoppingCart) {
 
         Long foodId = shoppingCart.getFoodId();
