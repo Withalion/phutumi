@@ -20,7 +20,7 @@ public class RestaurantController {
 
     public static final Logger LOGGER = Logger.getLogger(RestaurantController.class.getName());
 
-    @GetMapping("/phutumi")
+    @GetMapping("/phutumi/restaurants")
     public ResponseEntity<List<Restaurant>> restaurantsOffer() {
 
         List<Restaurant> restaurants = restaurantRepository.findAll();
