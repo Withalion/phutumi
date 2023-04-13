@@ -5,6 +5,21 @@
     <title>Phutumi home page</title>
 </head>
 <body>
-    <p th:text="'Hello, ' + ${name} + '!'" />
+    <div>
+        <button type="button">LOGO</button>
+        <button type="button">LOG IN</button>
+    </div>
+    <div>
+        <h1>Welcome to Phutumi</h1>
+    </div>
+    <div th:unless="${#lists.isEmpty(restaurants)}">
+        <h2>List of available restaurants</h2>
+        <div th:each="restaurant: ${restaurants}">
+            <img alt="Restaurant logo" title="Restaurant logo" th:src="@{/images/restaurant.png}"/>
+            <span th:text="${restaurant.id}"/>
+            <span th:text="${restaurant.name}"/>
+        </div>
+    </div>
+    <a href="https://www.flaticon.com/free-icons/restaurant" title="restaurant icons">Restaurant icons created by Eucalyp - Flaticon</a>
 </body>
 </html>
