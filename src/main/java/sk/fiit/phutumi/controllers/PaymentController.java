@@ -33,22 +33,13 @@ public class PaymentController {
         }
 
         if (!orderToPay.getProcessed()){
-            System.out.println("Do you want to pay for the order (y=yes)");
-            Scanner scan = new Scanner(System.in);
-            String input = scan.next();
 
+            orderToPay.setProcessed(true);
+            orderRepository.save(orderToPay);
+            LOGGER.log(Level.INFO, "--- payment confirmed for order: "+ orderId);
 
-            if(input.equals("y")){
-                orderToPay.setProcessed(true);
-                orderRepository.save(orderToPay);
-                LOGGER.log(Level.INFO, "--- payment confirmed for order: "+ orderId);
+            return new ResponseEntity<>(orderToPay, HttpStatus.OK);
 
-                return new ResponseEntity<>(orderToPay, HttpStatus.OK);
-            }
-            else{
-                LOGGER.log(Level.INFO, "--- payment cancelled for order: "+ orderId);
-                return new ResponseEntity<>(orderToPay, HttpStatus.BAD_REQUEST);
-            }
         }
         else {
             LOGGER.log(Level.INFO, "--- payment already processed for order: " + orderId);

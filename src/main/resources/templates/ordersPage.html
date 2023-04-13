@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+  <tr th:if="${orders.empty}">
+    <td colspan="2"> No Orders Available </td>
+  </tr>
+  <tr th:each="order : ${orders}">
+    <p>
+      <span th:text="${order.id}"> Order </span>
+      <a th:href="@{'/phutumi/payOrder?orderId='+${order.id}}">
+        <button type="button">Confirm</button>
+      </a>
+    </p>
+  </tr>
+</body>
+</html>
