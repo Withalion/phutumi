@@ -24,6 +24,20 @@ public class OrderController {
 
     public static final Logger LOGGER = Logger.getLogger(OrderController.class.getName());
 
+
+    @PostMapping(value = "/phutumi/order")
+    public ResponseEntity<Order> createNewOrder() {
+        try {
+            //create new order
+            Order newOrder = orderRepository.save(new Order());
+            return new ResponseEntity<>(newOrder, HttpStatus.CREATED);
+        } catch (Exception e) {
+            LOGGER.log(Level.SEVERE, "--- Did not create new Order");
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
     @PostMapping(value = "/phutumi/shoppingCart", consumes = "application/json")
     public ResponseEntity<ShoppingCart> shoppingCard(@RequestBody ShoppingCart shoppingCart) {
 
