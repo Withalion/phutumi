@@ -6,6 +6,26 @@
   <title>Restaurant page</title>
 </head>
 <body>
+<script th:inline="javascript">
+
+  function addFoodToShoppingCart(ids) {
+    let split_ids = ids.split(',');
+    let foodId = split_ids[0];
+    let orderId = split_ids[1];
+
+    const just_fetch = fetch(`http://localhost:8080/phutumi/addToShoppingCart?foodId=${foodId}&orderId=${orderId}`)
+    // .then((res) => res.json())
+    // .finally()
+    // .then((ans) => console.log(ans))
+    // .then((rovers) => updateStore(store, { rovers }));
+  }
+
+
+  function toShoppingCart(orderId) {
+    const just_fetch = fetch(`http://localhost:8080/phutumi/shoppingCart?id=${orderId}`)
+  }
+
+</script>
 <header class="bg-white dark:bg-gray-900 m-4">
   <div class="w-full max-w-screen-xl mx-auto p-4 md:py-8">
     <div class="sm:flex sm:items-center sm:justify-between">
@@ -15,7 +35,7 @@
       </a>
       <ul class="flex flex-wrap items-center mb-6 text-sm font-medium text-gray-500 sm:mb-0 dark:text-gray-400">
         <li>
-          <a href="#" class="mr-4 hover:underline md:mr-6 ">Cart</a>
+          <a href="#" th:onclick="'javascript:toShoppingCart(\'' + ${order.id} + '\');'" class="mr-4 hover:underline md:mr-6 ">Cart</a>
         </li>
         <li>
           <a href="#" class="mr-4 hover:underline md:mr-6">Log-in</a>
@@ -34,6 +54,7 @@
 </div>
 
 
+
 <div class="m-28" th:unless="${#lists.isEmpty(foods)}">
   <div class="grid grid-cols-1 gap-4">
     <div th:each="food: ${foods}" class="max-w-sm bg-white rounded-lg shadow-lg dark:bg-gray-800 dark:border-gray-700">
@@ -43,7 +64,9 @@
       <div class="p-5">
         <h1 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white" th:text="${food.name}"/>
       </div>
-      <a href="#" class="inline-flex items-center my-5 px-3 py-2 text-sm font-medium text-center text-primary-50 bg-primary-500 rounded-lg hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+<!--      <a th:href="@{/phutumi/addToShoppingCart(foodId=${food.id}, orderId=${order.id})}" class="inline-flex items-center my-5 px-3 py-2 text-sm font-medium text-center text-primary-50 bg-primary-500 rounded-lg hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">-->
+      <a href="#" th:onclick="'javascript:addFoodToShoppingCart(\'' + ${food.id} + ',' + ${order.id} + '\');'" class="inline-flex items-center my-5 px-3 py-2 text-sm font-medium text-center text-primary-50 bg-primary-500 rounded-lg hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+
         <img class="rounded-t-lg" alt="Food image" title="Food image" th:src="@{/images/shopping-cart.png}"/>
       </a>
     </div>

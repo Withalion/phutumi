@@ -30,6 +30,7 @@ public class OrderController {
         try {
             //create new order
             Order newOrder = orderRepository.save(new Order());
+            LOGGER.log(Level.INFO, "--- New Order created");
             return new ResponseEntity<>(newOrder, HttpStatus.CREATED);
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, "--- Did not create new Order");
@@ -38,32 +39,17 @@ public class OrderController {
     }
 
 
-    @PostMapping(value = "/phutumi/shoppingCart", consumes = "application/json")
-    public ResponseEntity<ShoppingCart> shoppingCard(@RequestBody ShoppingCart shoppingCart) {
+    @GetMapping(value = "/phutumi/addToShoppingCart")
+    public ResponseEntity<ShoppingCart> shoppingCard(@RequestParam("foodId") Long foodId, @RequestParam("orderId") Long orderId) {
 
-        Long foodId = shoppingCart.getFoodId();
-        Long orderId = shoppingCart.getOrderId();
 
-        // if order in request body is null
-        if (orderId == null) {
-            try {
-                Order newOrder = orderRepository.save(new Order());
-                orderId = newOrder.getId();
-                LOGGER.log(Level.INFO, "--- order created");
-            } catch (Exception e) {
-                LOGGER.log(Level.SEVERE, "--- order not created");
-                return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-            }
-        } else {
-            Optional<Order> orderDB = orderRepository.findById(orderId);
-            if (orderDB.isEmpty()) {
-                LOGGER.log(Level.SEVERE, "--- order ID provided in request body is not in DB");
-                return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-            } else if (orderDB.get().getProcessed()) {
-                LOGGER.log(Level.INFO, "--- order already processed (payed for)");
-                return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-            }
-
+        Optional<Order> orderDB = orderRepository.findById(orderId);
+        if (orderDB.isEmpty()) {
+            LOGGER.log(Level.SEVERE, "--- order ID provided in request body is not in DB");
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        } else if (orderDB.get().getProcessed() || orderDB.get().getPaid()) {
+            LOGGER.log(Level.INFO, "--- order already processed or payed for or both");
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
 
         try {
