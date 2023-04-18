@@ -5,6 +5,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import sk.fiit.phutumi.models.Order;
@@ -27,9 +28,15 @@ public class PayingController {
                 .path("/getOrder")
                 .queryParam("orderId", orderId)
                 .build()).retrieve().bodyToMono(Order.class);
-        model.addAttribute("foods", foods.block());
-        model.addAttribute("order", order.block());
-        return "shoppingCartPage";
+        try{
+            model.addAttribute("foods", foods.block());
+            model.addAttribute("order", order.block());
+            return "shoppingCartPage";
+        }catch (WebClientResponseException.NotFound err){
+            return "notFound";
+        }catch (WebClientResponseException.BadRequest err2){
+            return "badRequest";
+        }
     }
 
     @GetMapping("/phutumi/orders")
