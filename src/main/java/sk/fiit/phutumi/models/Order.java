@@ -23,6 +23,9 @@ public class Order {
     @Column(name = "processed")
     private boolean processed;
 
+    @Column(name = "paid")
+    private boolean paid;
+
     public Order() {
 
     }
@@ -30,6 +33,7 @@ public class Order {
     public Order(Long id, boolean processed) {
         this.id = id;
         this.processed = processed;
+        this.paid = paid;
     }
 
     public Long getId() {
@@ -46,5 +50,13 @@ public class Order {
 
     public void setProcessed(boolean processed) {
         this.processed = processed;
+    }
+
+    public boolean getPaid() {
+        return paid;
+    }
+
+    public void setPaid(boolean paid) {
+        this.paid = paid;
     }
 }
