@@ -5,6 +5,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
 import reactor.core.publisher.Mono;
 
 import java.util.List;
@@ -23,11 +24,21 @@ public class OrderingController {
 
     @GetMapping("/phutumi/restaurant")
     public String restaurantPage(@RequestParam("id") Long restaurantId, Model model){
+        Mono<List> order = client.post().uri(uriBuilder -> uriBuilder
+                .path("/order")
+                .build()).retrieve().bodyToMono(List.class);
         Mono<List> foods = client.get().uri(uriBuilder -> uriBuilder
                 .path("/food")
                 .queryParam("restaurantId", restaurantId)
                 .build()).retrieve().bodyToMono(List.class);
-        model.addAttribute("foods", foods.block());
-        return "restaurantPage";
+        try{
+            model.addAttribute("order", order.block());
+            model.addAttribute("foods", foods.block());
+            return "restaurantPage";
+        }catch (WebClientResponseException.NotFound err){
+            return "notFound";
+        }catch (WebClientResponseException.BadRequest err2){
+            return "badRequest";
+        }
     }
 }
