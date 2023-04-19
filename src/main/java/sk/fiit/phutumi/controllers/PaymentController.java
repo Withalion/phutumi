@@ -53,12 +53,18 @@ public class PaymentController {
 
             List<ShoppingCart> shoppingCarts =  shoppingCardRepository.findOnlyFoodIdsByOrderId(orderId);
             List<Long> foodIds = new ArrayList<>();
-            List<Food> foods;
+            List<Food> foods = new ArrayList<>();
             if (!shoppingCarts.isEmpty()) {
                 for (ShoppingCart shoppingCart : shoppingCarts) {
                     foodIds.add(shoppingCart.getFoodId());
                 }
-                foods = foodRepository.findFoodsByIdIn(foodIds);
+                for(Long food_id : foodIds){
+                    Optional<Food> f = foodRepository.findById(food_id);
+                    if(f.isPresent()){
+                        foods.add(f.get());
+                    }
+                }
+//                foods = foodRepository.findAllById(foodIds);
             } else {
                 foods = null;
             }
