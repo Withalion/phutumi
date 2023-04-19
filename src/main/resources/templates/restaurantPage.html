@@ -52,17 +52,15 @@
 
 
 <div class="m-28" th:unless="${#lists.isEmpty(foods)}">
-  <div class="grid grid-cols-1 gap-4">
-    <div th:each="food: ${foods}" class="max-w-sm bg-white rounded-lg shadow-lg dark:bg-gray-800 dark:border-gray-700">
+  <div >
+    <div th:each="food: ${foods}" class="flex flex-row items-center justify-between px-5 py-4 mx-60 bg-white rounded-lg shadow-lg dark:bg-gray-800 dark:border-gray-700">
       <div>
-        <img class="rounded-t-lg" alt="Food image" title="Food image" th:src="@{/images/fast-food.png}"/>
+        <img class="object-cover w-full rounded-t-lg h-40" alt="Food image" title="Food image" th:src="@{/images/fast-food.png}"/>
       </div>
-      <div class="p-5">
+      <div class="p-5 flex flex-row justify-between leading-normal items-center">
         <h1 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white" th:text="${food.name}"/>
       </div>
-<!--      <a th:href="@{/phutumi/addToShoppingCart(foodId=${food.id}, orderId=${order.id})}" class="inline-flex items-center my-5 px-3 py-2 text-sm font-medium text-center text-primary-50 bg-primary-500 rounded-lg hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">-->
-      <a href="#" th:onclick="'javascript:addFoodToShoppingCart(\'' + ${food.id} + ',' + ${order.id} + '\');'" class="inline-flex items-center my-5 px-3 py-2 text-sm font-medium text-center text-primary-50 bg-primary-500 rounded-lg hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
-
+      <a href="#" th:onclick="'javascript:addFoodToShoppingCart(\'' + ${food.id} + ',' + ${order.id} + '\');'" class="justify-self-end flex items-center my-5 px-3 py-2 text-sm font-medium text-center text-primary-50 bg-primary-500 rounded-lg hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
         <img class="rounded-t-lg" alt="Food image" title="Food image" th:src="@{/images/shopping-cart.png}"/>
       </a>
     </div>
