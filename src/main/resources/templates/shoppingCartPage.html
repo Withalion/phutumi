@@ -30,6 +30,29 @@
   </h1>
 </div>
 
+<div class="m-28" th:unless="${#lists.isEmpty(foods)}">
+  <div>
+    <div th:each="food: ${foods}" class="flex flex-row items-center justify-between px-5 py-4 mx-60 bg-white rounded-lg shadow-lg dark:bg-gray-800 dark:border-gray-700">
+      <div>
+        <img class="object-cover w-full rounded-t-lg h-40" alt="Food image" title="Food image" th:src="@{/images/fast-food.png}"/>
+      </div>
+      <div class="p-5">
+        <h1 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white" th:text="${food.name}"/>
+      </div>
+      <div></div>
+    </div>
+  </div>
+</div>
+
+<div class="flex items-center justify-center">
+  <a th:href="@{/phutumi}" th:onclick="'javascript:toPay(\'' + ${order.id} + '\');'" class="flex h-24 w-48 items-center justify-center my-5 px-3 py-2 text-sm font-medium text-center text-primary-50 bg-primary-500 rounded-lg hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+    Pay order
+    <svg aria-hidden="true" class="w-4 h-4 ml-2 -mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+  </a>
+</div>
+<!--<a href="https://www.flaticon.com/free-icons/fast-food" title="fast food icons">Fast food icons created by Freepik - Flaticon</a>-->
+</body>
+
 <script th:inline="javascript">
 
   function toPay(orderId) {
@@ -38,27 +61,4 @@
 
 </script>
 
-<div class="m-28" th:unless="${#lists.isEmpty(foods)}">
-  <div class="grid grid-cols-1 gap-4">
-    <div th:each="food: ${foods}" class="max-w-sm bg-white rounded-lg shadow-lg dark:bg-gray-800 dark:border-gray-700">
-      <div>
-        <img class="rounded-t-lg" alt="Food image" title="Food image" th:src="@{/images/fast-food.png}"/>
-      </div>
-      <div class="p-5">
-        <h1 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white" th:text="${food.name}"/>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div>
-
-  <a th:href="@{/phutumi}" th:onclick="'javascript:toPay(\'' + ${order.id} + '\');'" class="inline-flex items-center my-5 px-3 py-2 text-sm font-medium text-center text-primary-50 bg-primary-500 rounded-lg hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
-    Pay order
-    <svg aria-hidden="true" class="w-4 h-4 ml-2 -mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-  </a>
-
-</div>
-<!--<a href="https://www.flaticon.com/free-icons/fast-food" title="fast food icons">Fast food icons created by Freepik - Flaticon</a>-->
-</body>
 </html>
