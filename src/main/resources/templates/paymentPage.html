@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">>
+<head>
+    <meta charset="UTF-8">
+    <title>Payment</title>
+</head>
+<body>
+  <tr th:if="${foods.empty}">
+      <td colspan="2"> No Foods Available </td>
+  </tr>
+  <tr th:each="food : ${foods}">
+      <p><span th:text="${food.name}"> Food </span></p>
+  </tr>
+  <p>
+      <a th:href="@{'/phutumi/payedOrder?orderId='+${orderId}}">
+      <button type="button">Pay</button>
+      </a>
+  </p>
+</body>
+</html>
