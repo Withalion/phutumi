@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta content="text/html" charset="UTF-8">
+  <link th:href="@{/main.css}" rel="stylesheet" />
+  <title>Restaurant page</title>
+</head>
+<body>
+<script th:inline="javascript">
+
+  function addFoodToShoppingCart(ids) {
+    let split_ids = ids.split(',');
+    let foodId = split_ids[0];
+    let orderId = split_ids[1];
+
+    const just_fetch = fetch(`http://localhost:8080/phutumi/addToShoppingCart?foodId=${foodId}&orderId=${orderId}`)
+    // .then((res) => res.json())
+    // .finally()
+    // .then((ans) => console.log(ans))
+    // .then((rovers) => updateStore(store, { rovers }));
+  }
+
+  function toShoppingCart(orderId) {
+    const just_fetch = fetch(`http://localhost:8080/phutumi/shoppingCart?id=${orderId}`)
+  }
+
+</script>
+<header class="bg-white dark:bg-gray-900 m-4">
+  <div class="w-full max-w-screen-xl mx-auto p-4 md:py-8">
+    <div class="sm:flex sm:items-center sm:justify-between">
+      <a th:href="@{/phutumi}" class="flex items-center mb-4 sm:mb-0">
+        <img src="https://flowbite.com/docs/images/logo.svg" class="h-8 mr-3" alt="Phutumi Logo" />
+        <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Phutumi</span>
+      </a>
+      <ul class="flex flex-wrap items-center mb-6 text-sm font-medium text-gray-500 sm:mb-0 dark:text-gray-400">
+        <li>
+          <a href="#" th:href="@{/phutumi/shoppingCart(id=${order.id})}" class="mr-4 hover:underline md:mr-6 ">Cart</a>
+        </li>
+      </ul>
+    </div>
+    <hr class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
+  </div>
+</header>
+
+
+<div>
+  <h1 class="mb-4 text-4xl text-center font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
+    <mark class="px-2 text-white bg-primary-600 rounded dark:bg-primary-500"> Restaurant</mark>
+  </h1>
+</div>
+
+
+
+<div class="m-28" th:unless="${#lists.isEmpty(foods)}">
+  <div >
+    <div th:each="food: ${foods}" class="flex flex-row items-center justify-between px-5 py-4 mx-60 bg-white rounded-lg shadow-lg dark:bg-gray-800 dark:border-gray-700">
+      <div>
+        <img class="object-cover w-full rounded-t-lg h-40" alt="Food image" title="Food image" th:src="@{/images/fast-food.png}"/>
+      </div>
+      <div class="p-5 flex flex-row justify-between leading-normal items-center">
+        <h1 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white" th:text="${food.name}"/>
+      </div>
+      <a href="#" th:onclick="'javascript:addFoodToShoppingCart(\'' + ${food.id} + ',' + ${order.id} + '\');'" class="justify-self-end flex items-center my-5 px-3 py-2 text-sm font-medium text-center text-primary-50 bg-primary-500 rounded-lg hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+        <img class="rounded-t-lg" alt="Food image" title="Food image" th:src="@{/images/shopping-cart.png}"/>
+      </a>
+    </div>
+  </div>
+</div>
+<!--<a href="https://www.flaticon.com/free-icons/fast-food" title="fast food icons">Fast food icons created by Freepik - Flaticon</a>-->
+</body>
+</html>
