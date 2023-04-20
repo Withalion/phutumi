@@ -1,6 +1,6 @@
 package sk.fiit.phutumi.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,17 +13,15 @@ import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+@RequiredArgsConstructor
 @RestController
 public class FoodController {
 
-    @Autowired
-    FoodRepository foodRepository;
+    private final FoodRepository foodRepository;
 
-    @Autowired
-    MenuRepository menuRepository;
+    private final MenuRepository menuRepository;
 
-    @Autowired
-    RestaurantRepository restaurantRepository;
+    private final RestaurantRepository restaurantRepository;
 
     public static final Logger LOGGER = Logger.getLogger(FoodController.class.getName());
 

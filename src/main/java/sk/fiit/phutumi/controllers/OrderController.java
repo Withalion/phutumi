@@ -1,6 +1,6 @@
 package sk.fiit.phutumi.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,14 +13,13 @@ import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+@RequiredArgsConstructor
 @RestController
 public class OrderController {
 
-    @Autowired
-    OrderRepository orderRepository;
+    private final OrderRepository orderRepository;
 
-    @Autowired
-    ShoppingCardRepository shoppingCardRepository;
+    private final ShoppingCardRepository shoppingCardRepository;
 
     public static final Logger LOGGER = Logger.getLogger(OrderController.class.getName());
 

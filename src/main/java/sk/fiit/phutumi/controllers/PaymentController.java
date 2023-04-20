@@ -1,6 +1,6 @@
 package sk.fiit.phutumi.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,21 +12,18 @@ import sk.fiit.phutumi.models.Order;
 import sk.fiit.phutumi.models.ShoppingCart;
 
 import java.util.*;
-import java.util.function.LongToIntFunction;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+@RequiredArgsConstructor
 @RestController
 public class PaymentController {
-    @Autowired
-    OrderRepository orderRepository;
-    @Autowired
-    ShoppingCardRepository shoppingCardRepository;
-    @Autowired
-    FoodRepository foodRepository;
+    private final OrderRepository orderRepository;
+    private final ShoppingCardRepository shoppingCardRepository;
+    private final FoodRepository foodRepository;
     public static final Logger LOGGER = Logger.getLogger(PaymentController.class.getName());
 
-    @RequestMapping(value = "/phutumi/getOrder", method = RequestMethod.GET)
+    @GetMapping(value = "/phutumi/getOrder")
     public @ResponseBody ResponseEntity<Order> getOrder(@RequestParam("orderId") Long orderId) {
 
         Order order = orderRepository.findById(orderId).orElse(null);
@@ -41,7 +38,7 @@ public class PaymentController {
 
     }
 
-    @RequestMapping(value = "/phutumi/getOrderFoods", method = RequestMethod.GET)
+    @GetMapping(value = "/phutumi/getOrderFoods")
     public @ResponseBody ResponseEntity<List<Food>> getOrderFoods(@RequestParam("orderId") Long orderId) {
 
         Order orderToPay = orderRepository.findById(orderId).orElse(null);
@@ -76,7 +73,7 @@ public class PaymentController {
             return new ResponseEntity<>(null, HttpStatus.OK);
         }
     }
-    @RequestMapping(value = "/phutumi/payOrder", method = RequestMethod.GET)
+    @GetMapping(value = "/phutumi/payOrder")
     public @ResponseBody ResponseEntity<Order> payOrder(@RequestParam("orderId") Long orderId) {
 
         Order orderToPay = orderRepository.findById(orderId).orElse(null);
@@ -98,7 +95,7 @@ public class PaymentController {
         return new ResponseEntity<>(null, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/phutumi/processOrder", method = RequestMethod.GET)
+    @GetMapping(value = "/phutumi/processOrder")
     public @ResponseBody ResponseEntity<Order> processOrder(@RequestParam("orderId") Long orderId) {
 
         Order orderToPay = orderRepository.findById(orderId).orElse(null);
@@ -118,14 +115,14 @@ public class PaymentController {
         return null;
     }
 
-    @RequestMapping(value = "/phutumi/ordersToProcess", method = RequestMethod.GET)
+    @GetMapping(value = "/phutumi/ordersToProcess")
     public @ResponseBody ResponseEntity<List> getOrdersToProcess() {
 
         List<Order> orders = orderRepository.findAll();
         List<Order> ordersToReturn = new ArrayList<>();
 
         if (orders == null){
-            LOGGER.log(Level.INFO, "--- no orders to retrive");
+            LOGGER.log(Level.INFO, "--- no orders to retrieve");
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
 
@@ -135,7 +132,7 @@ public class PaymentController {
             }
         }
         if(ordersToReturn == null){
-            LOGGER.log(Level.INFO, "--- no paid orders to retrive");
+            LOGGER.log(Level.INFO, "--- no paid orders to retrieve");
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
 
