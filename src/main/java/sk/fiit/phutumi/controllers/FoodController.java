@@ -1,6 +1,8 @@
 package sk.fiit.phutumi.controllers;
 
 import lombok.RequiredArgsConstructor;
+import org.camunda.bpm.engine.delegate.DelegateExecution;
+import org.camunda.bpm.engine.delegate.JavaDelegate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +17,7 @@ import java.util.logging.Logger;
 
 @RequiredArgsConstructor
 @RestController
-public class FoodController {
+public class FoodController implements JavaDelegate {
 
     private final FoodRepository foodRepository;
 
@@ -24,6 +26,7 @@ public class FoodController {
     private final RestaurantRepository restaurantRepository;
 
     public static final Logger LOGGER = Logger.getLogger(FoodController.class.getName());
+
 
     @GetMapping("/phutumi/food")
     public ResponseEntity<List<Food>> foodOffer(@RequestParam Map<String, String> restaurantId) {
@@ -75,5 +78,10 @@ public class FoodController {
             LOGGER.log(Level.SEVERE, "--- no name in request body, new food not created");
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @Override
+    public void execute(DelegateExecution delegateExecution) throws Exception {
+        LOGGER.info("--------- calculating interest of the loan");
     }
 }

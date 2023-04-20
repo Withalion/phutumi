@@ -1,0 +1,46 @@
+{
+  "components": [
+    {
+      "action": "submit",
+      "label": "Burger King",
+      "type": "button",
+      "layout": {
+        "row": "Row_18gru0g",
+        "columns": null
+      },
+      "id": "Field_1aqojqx",
+      "key": "field_0hjldic"
+    },
+    {
+      "action": "submit",
+      "label": "McDonald's",
+      "type": "button",
+      "layout": {
+        "row": "Row_1tscs5x",
+        "columns": null
+      },
+      "id": "Field_1nf1h1f",
+      "key": "field_0coc957"
+    },
+    {
+      "action": "submit",
+      "label": "Pizza Hut",
+      "type": "button",
+      "layout": {
+        "row": "Row_1sck0i1",
+        "columns": null
+      },
+      "id": "Field_1ao7q9p",
+      "key": "field_18lc5xl"
+    }
+  ],
+  "type": "default",
+  "id": "main_form",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.10.0"
+  },
+  "executionPlatform": "Camunda Platform",
+  "executionPlatformVersion": "7.19.0",
+  "schemaVersion": 8
+}

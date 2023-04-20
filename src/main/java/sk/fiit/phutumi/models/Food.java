@@ -3,6 +3,7 @@ package sk.fiit.phutumi.models;
 import jakarta.persistence.*;
 import org.springframework.data.annotation.Id;
 
+
 @Entity
 @Table(name = "foods")
 public class Food {
