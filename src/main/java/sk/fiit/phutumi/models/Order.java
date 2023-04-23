@@ -1,24 +1,20 @@
 package sk.fiit.phutumi.models;
 
-import jakarta.persistence.*;
-import org.hibernate.annotations.CurrentTimestamp;
-import org.hibernate.tuple.GenerationTiming;
-import org.springframework.data.annotation.Id;
-
-import java.sql.Date;
+import org.hibernate.annotations.CreationTimestamp;
+import javax.persistence.*;
+import java.sql.Timestamp;
 
 @Entity
 @Table(name = "orders")
 public class Order {
 
-    @jakarta.persistence.Id
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @CurrentTimestamp(timing = GenerationTiming.INSERT)
+    @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
-    private Date createdAt;
+    private Timestamp createdAt;
 
     @Column(name = "processed")
     private boolean processed;
@@ -31,6 +27,11 @@ public class Order {
     }
 
     public Order(Long id, boolean processed) {
+        this.id = id;
+        this.processed = processed;
+    }
+
+    public Order(Long id, boolean processed, boolean paid) {
         this.id = id;
         this.processed = processed;
         this.paid = paid;

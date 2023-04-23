@@ -1,13 +1,13 @@
 package sk.fiit.phutumi.models;
 
-import jakarta.persistence.*;
-import org.springframework.data.annotation.Id;
+//import jakarta.persistence.*;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "restaurants")
 public class Restaurant {
 
-    @jakarta.persistence.Id
+//    @jakarta.persistence.Id
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
