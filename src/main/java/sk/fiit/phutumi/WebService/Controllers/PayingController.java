@@ -1,31 +1,38 @@
-package sk.fiit.phutumi.Views;
+package sk.fiit.phutumi.WebService.Controllers;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
 import reactor.core.publisher.Mono;
-import sk.fiit.phutumi.models.Order;
+import sk.fiit.phutumi.WebService.Models.Order;
 
 import java.util.List;
 
+@RequiredArgsConstructor
 @Controller
+@RequestMapping(path = "/phutumi")
 public class PayingController {
-    WebClient client = WebClient.create("http://localhost:8080/phutumi");
+    private final String paymentServiceURL;
+    private final WebClient.Builder webclientBuilder;
 
-
-    @GetMapping("/phutumi/shoppingCart")
+    @GetMapping("/shoppingCart")
     public String payingPage(@RequestParam("id") Long orderId, Model model){
-        Mono<List> foods = client.get().uri(uriBuilder -> uriBuilder
+        Mono<List> foods = webclientBuilder.build().get().uri(uriBuilder -> uriBuilder
+                .host(paymentServiceURL)
                 .path("/getOrderFoods")
                 .queryParam("orderId", orderId)
                 .build()).retrieve().bodyToMono(List.class);
-        Mono<Order> order = client.get().uri(uriBuilder -> uriBuilder
+        Mono<Order> order = webclientBuilder.build().get().uri(uriBuilder -> uriBuilder
+                .host(paymentServiceURL)
                 .path("/getOrder")
                 .queryParam("orderId", orderId)
                 .build()).retrieve().bodyToMono(Order.class);
+
         try{
             model.addAttribute("foods", foods.block());
             model.addAttribute("order", order.block());
@@ -37,9 +44,10 @@ public class PayingController {
         }
     }
 
-    @GetMapping("/phutumi/orders")
+    @GetMapping("/orders")
     public String ordersPage(Model model){
-        Mono<List> orders = client.get().uri("/ordersToProcess").retrieve().bodyToMono(List.class);
+        Mono<List> orders = webclientBuilder.build().get().uri("http://" + paymentServiceURL + "/ordersToProcess")
+                .retrieve().bodyToMono(List.class);
         model.addAttribute("orders", orders.block());
         return "ordersPage";
     }

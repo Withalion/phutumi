@@ -56,7 +56,7 @@
 <script th:inline="javascript">
 
   async function toProcess(orderId) {
-    const just_fetch = await fetch(`http://localhost:8080/phutumi/processOrder?orderId=${orderId}`);
+    const just_fetch = await fetch(`http://localhost:8080/phutumi/api/processOrder?orderId=${orderId}`);
     window.location.reload();
   }
 

@@ -13,7 +13,7 @@
     let foodId = split_ids[0];
     let orderId = split_ids[1];
 
-    const just_fetch = fetch(`http://localhost:8080/phutumi/addToShoppingCart?foodId=${foodId}&orderId=${orderId}`)
+    const just_fetch = fetch(`http://localhost:8080/phutumi/api/addToShoppingCart?foodId=${foodId}&orderId=${orderId}`)
     // .then((res) => res.json())
     // .finally()
     // .then((ans) => console.log(ans))
