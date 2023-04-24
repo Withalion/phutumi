@@ -1,0 +1,35 @@
+# Spring properties
+spring:
+  application:
+    name: Offer-Service       # Service registers under this name
+  freemarker:
+    enabled: false           # Ignore Eureka dashboard FreeMarker templates
+  thymeleaf:
+    cache: false             # Allow Thymeleaf templates to be reloaded at runtime
+  datasource:
+    url: jdbc:postgresql://ep-holy-morning-014938.eu-central-1.aws.neon.tech:5432/neondb?user=xadlero&password=tQYJrTf2KWm3
+    username: xadlero
+    password: tQYJrTf2KWm3
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+# HTTP Server
+server.port: 7810   # HTTP (Tomcat) port
+
+# Discovery Server Access
+#  1. DEV ONLY: Reduce the lease renewal interval to speed up registration
+#  2. Define URL of registration server (defaultZone)
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:1111/eureka/
+  instance:
+    leaseRenewalIntervalInSeconds: 10   # DO NOT DO THIS IN PRODUCTION
+
+# Enable actuator access without security checks - DEVELOPMENT ONLY
+# Spring Boot 1.5
+# management.security.enabled: false
+# Spring Boot 2.x
+management.endpoints.web.exposure.include: '*'
+
