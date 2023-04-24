@@ -1,15 +1,15 @@
-package sk.fiit.phutumi.controllers;
+package sk.fiit.phutumi.PaymentService.Controllers;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import sk.fiit.phutumi.Repository.FoodRepository;
-import sk.fiit.phutumi.Repository.OrderRepository;
-import sk.fiit.phutumi.Repository.ShoppingCardRepository;
-import sk.fiit.phutumi.models.Food;
-import sk.fiit.phutumi.models.Order;
-import sk.fiit.phutumi.models.ShoppingCart;
+import sk.fiit.phutumi.PaymentService.Models.Food;
+import sk.fiit.phutumi.PaymentService.Models.Order;
+import sk.fiit.phutumi.PaymentService.Models.ShoppingCart;
+import sk.fiit.phutumi.PaymentService.Repositories.FoodRepository;
+import sk.fiit.phutumi.PaymentService.Repositories.OrderRepository;
+import sk.fiit.phutumi.PaymentService.Repositories.ShoppingCardRepository;
 
 import java.util.*;
 import java.util.logging.Level;
@@ -23,7 +23,7 @@ public class PaymentController {
     private final FoodRepository foodRepository;
     public static final Logger LOGGER = Logger.getLogger(PaymentController.class.getName());
 
-    @GetMapping(value = "/phutumi/getOrder")
+    @GetMapping(value = "/getOrder")
     public @ResponseBody ResponseEntity<Order> getOrder(@RequestParam("orderId") Long orderId) {
 
         Order order = orderRepository.findById(orderId).orElse(null);
@@ -38,7 +38,7 @@ public class PaymentController {
 
     }
 
-    @GetMapping(value = "/phutumi/getOrderFoods")
+    @GetMapping(value = "/getOrderFoods")
     public @ResponseBody ResponseEntity<List<Food>> getOrderFoods(@RequestParam("orderId") Long orderId) {
 
         Order orderToPay = orderRepository.findById(orderId).orElse(null);
@@ -46,7 +46,7 @@ public class PaymentController {
         if (orderToPay == null){
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
-        if (!orderToPay.getPaid()){
+        if (!orderToPay.isPaid()){
 
             List<ShoppingCart> shoppingCarts =  shoppingCardRepository.findOnlyFoodIdsByOrderId(orderId);
             List<Long> foodIds = new ArrayList<>();
@@ -73,7 +73,7 @@ public class PaymentController {
             return new ResponseEntity<>(null, HttpStatus.OK);
         }
     }
-    @GetMapping(value = "/phutumi/payOrder")
+    @GetMapping(value = "/payOrder")
     public @ResponseBody ResponseEntity<Order> payOrder(@RequestParam("orderId") Long orderId) {
 
         Order orderToPay = orderRepository.findById(orderId).orElse(null);
@@ -83,7 +83,7 @@ public class PaymentController {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
 
-        if (!orderToPay.getPaid()) {
+        if (!orderToPay.isPaid()) {
 
             orderToPay.setPaid(true);
             orderRepository.save(orderToPay);
@@ -95,7 +95,7 @@ public class PaymentController {
         return new ResponseEntity<>(null, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/phutumi/processOrder")
+    @GetMapping(value = "/processOrder")
     public @ResponseBody ResponseEntity<Order> processOrder(@RequestParam("orderId") Long orderId) {
 
         Order orderToPay = orderRepository.findById(orderId).orElse(null);
@@ -104,7 +104,7 @@ public class PaymentController {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
 
-        if (!orderToPay.getProcessed()) {
+        if (!orderToPay.isProcessed()) {
 
             orderToPay.setProcessed(true);
             orderRepository.save(orderToPay);
@@ -115,23 +115,23 @@ public class PaymentController {
         return null;
     }
 
-    @GetMapping(value = "/phutumi/ordersToProcess")
+    @GetMapping(value = "/ordersToProcess")
     public @ResponseBody ResponseEntity<List> getOrdersToProcess() {
 
         List<Order> orders = orderRepository.findAll();
         List<Order> ordersToReturn = new ArrayList<>();
 
-        if (orders == null){
+        if (orders.isEmpty()){
             LOGGER.log(Level.INFO, "--- no orders to retrieve");
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
 
         for(Order order: orders){
-            if (!order.getProcessed() && order.getPaid()) {
+            if (!order.isProcessed() && order.isPaid()) {
                 ordersToReturn.add(order);
             }
         }
-        if(ordersToReturn == null){
+        if(ordersToReturn.isEmpty()){
             LOGGER.log(Level.INFO, "--- no paid orders to retrieve");
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
