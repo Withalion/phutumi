@@ -1,8 +1,8 @@
 package sk.fiit.phutumi.controllers;
 
 import lombok.RequiredArgsConstructor;
-//import org.camunda.bpm.engine.delegate.DelegateExecution;
-//import org.camunda.bpm.engine.delegate.JavaDelegate;
+import org.camunda.bpm.engine.delegate.DelegateExecution;
+import org.camunda.bpm.engine.delegate.JavaDelegate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +17,7 @@ import java.util.logging.Logger;
 
 @RequiredArgsConstructor
 @RestController
-public class FoodController {   // implements JavaDelegate
+public class FoodController implements JavaDelegate {
 
     private final FoodRepository foodRepository;
 
@@ -80,8 +80,8 @@ public class FoodController {   // implements JavaDelegate
         }
     }
 
-//    @Override
-//    public void execute(DelegateExecution delegateExecution) throws Exception {
-//        LOGGER.info("--------- calculating interest of the loan");
-//    }
+    @Override
+    public void execute(DelegateExecution delegateExecution) throws Exception {
+        LOGGER.info("--------- calculating interest of the loan");
+    }
 }
