@@ -1,10 +1,18 @@
-package sk.fiit.phutumi.models;
+package sk.fiit.phutumi.OrderService.Models;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.data.annotation.Id;
 
 @Entity
 @Table(name = "orders_foods")
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 public class ShoppingCart {
 
     @jakarta.persistence.Id
@@ -20,34 +28,6 @@ public class ShoppingCart {
 
     public ShoppingCart(Long foodId, Long orderId) {
         this.foodId = foodId;
-        this.orderId = orderId;
-    }
-
-    public ShoppingCart() {
-
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getFoodId() {
-        return foodId;
-    }
-
-    public void setFoodId(Long foodId) {
-        this.foodId = foodId;
-    }
-
-    public Long getOrderId() {
-        return orderId;
-    }
-
-    public void setOrderId(Long orderId) {
         this.orderId = orderId;
     }
 }

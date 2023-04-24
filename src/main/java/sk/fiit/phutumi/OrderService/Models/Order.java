@@ -1,6 +1,10 @@
-package sk.fiit.phutumi.models;
+package sk.fiit.phutumi.OrderService.Models;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.CurrentTimestamp;
 import org.hibernate.tuple.GenerationTiming;
 import org.springframework.data.annotation.Id;
@@ -9,6 +13,10 @@ import java.sql.Date;
 
 @Entity
 @Table(name = "orders")
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 public class Order {
 
     @jakarta.persistence.Id
@@ -25,38 +33,4 @@ public class Order {
 
     @Column(name = "paid")
     private boolean paid;
-
-    public Order() {
-
-    }
-
-    public Order(Long id, boolean processed) {
-        this.id = id;
-        this.processed = processed;
-        this.paid = paid;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public boolean getProcessed() {
-        return processed;
-    }
-
-    public void setProcessed(boolean processed) {
-        this.processed = processed;
-    }
-
-    public boolean getPaid() {
-        return paid;
-    }
-
-    public void setPaid(boolean paid) {
-        this.paid = paid;
-    }
 }

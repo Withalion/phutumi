@@ -1,7 +1,6 @@
-package sk.fiit.phutumi.Repository;
+package sk.fiit.phutumi.OrderService.Repositories;
 
-import sk.fiit.phutumi.models.Food;
-import sk.fiit.phutumi.models.ShoppingCart;
+import sk.fiit.phutumi.OrderService.Models.ShoppingCart;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

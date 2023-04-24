@@ -1,13 +1,13 @@
-package sk.fiit.phutumi.controllers;
+package sk.fiit.phutumi.OrderService.Controllers;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import sk.fiit.phutumi.Repository.OrderRepository;
-import sk.fiit.phutumi.Repository.ShoppingCardRepository;
-import sk.fiit.phutumi.models.Order;
-import sk.fiit.phutumi.models.ShoppingCart;
+import sk.fiit.phutumi.OrderService.Repositories.OrderRepository;
+import sk.fiit.phutumi.OrderService.Repositories.ShoppingCardRepository;
+import sk.fiit.phutumi.OrderService.Models.Order;
+import sk.fiit.phutumi.OrderService.Models.ShoppingCart;
 
 import java.util.Optional;
 import java.util.logging.Level;
@@ -24,7 +24,7 @@ public class OrderController {
     public static final Logger LOGGER = Logger.getLogger(OrderController.class.getName());
 
 
-    @PostMapping(value = "/phutumi/order")
+    @PostMapping(value = "/order")
     public ResponseEntity<Order> createNewOrder() {
         try {
             //create new order
@@ -38,7 +38,7 @@ public class OrderController {
     }
 
 
-    @GetMapping(value = "/phutumi/addToShoppingCart")
+    @GetMapping(value = "/addToShoppingCart")
     public ResponseEntity<ShoppingCart> shoppingCard(@RequestParam("foodId") Long foodId, @RequestParam("orderId") Long orderId) {
 
 
@@ -46,7 +46,7 @@ public class OrderController {
         if (orderDB.isEmpty()) {
             LOGGER.log(Level.SEVERE, "--- order ID provided in request body is not in DB");
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-        } else if (orderDB.get().getProcessed() || orderDB.get().getPaid()) {
+        } else if (orderDB.get().isProcessed() || orderDB.get().isPaid()) {
             LOGGER.log(Level.INFO, "--- order already processed or payed for or both");
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
