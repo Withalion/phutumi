@@ -1,10 +1,18 @@
-package sk.fiit.phutumi.models;
+package sk.fiit.phutumi.OfferService.Models;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.data.annotation.Id;
 
 @Entity
 @Table(name = "restaurants_foods")
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 public class Menu {
 
     @jakarta.persistence.Id
@@ -18,32 +26,8 @@ public class Menu {
     @Column(name = "food_id")
     private Long foodId;
 
-    public Menu() {
-
-    }
-
     public Menu(Long restaurantId, Long foodId) {
         this.restaurantId = restaurantId;
         this.foodId = foodId;
-    }
-
-    public Long getRestaurantId() {
-        return restaurantId;
-    }
-
-    public void setRestaurantId(Long restaurantId) {
-        this.restaurantId = restaurantId;
-    }
-
-    public Long getFoodId() {
-        return foodId;
-    }
-
-    public void setFoodId(Long foodId) {
-        this.foodId = foodId;
-    }
-
-    public long getId() {
-        return id;
     }
 }

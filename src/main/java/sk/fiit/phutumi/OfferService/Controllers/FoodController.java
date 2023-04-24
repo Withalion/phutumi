@@ -1,13 +1,16 @@
-package sk.fiit.phutumi.controllers;
+package sk.fiit.phutumi.OfferService.Controllers;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import sk.fiit.phutumi.Repository.FoodRepository;
-import sk.fiit.phutumi.Repository.MenuRepository;
-import sk.fiit.phutumi.Repository.RestaurantRepository;
-import sk.fiit.phutumi.models.*;
+import sk.fiit.phutumi.OfferService.Models.Food;
+import sk.fiit.phutumi.OfferService.Models.FoodAdder;
+import sk.fiit.phutumi.OfferService.Models.Menu;
+import sk.fiit.phutumi.OfferService.Models.Restaurant;
+import sk.fiit.phutumi.OfferService.Repositories.FoodRepository;
+import sk.fiit.phutumi.OfferService.Repositories.MenuRepository;
+import sk.fiit.phutumi.OfferService.Repositories.RestaurantRepository;
 
 import java.util.*;
 import java.util.logging.Level;
@@ -25,7 +28,7 @@ public class FoodController {
 
     public static final Logger LOGGER = Logger.getLogger(FoodController.class.getName());
 
-    @GetMapping("/phutumi/food")
+    @GetMapping("/food")
     public ResponseEntity<List<Food>> foodOffer(@RequestParam Map<String, String> restaurantId) {
 
         Long resId = Long.valueOf(restaurantId.get("restaurantId"));
@@ -46,7 +49,7 @@ public class FoodController {
         }
     }
 
-    @PostMapping(value = "/phutumi/food", consumes = "application/json")
+    @PostMapping(value = "/food", consumes = "application/json")
     public ResponseEntity<Menu> addFood(@RequestBody FoodAdder foodToAdd) {
 
         String foodName = foodToAdd.getFoodName();

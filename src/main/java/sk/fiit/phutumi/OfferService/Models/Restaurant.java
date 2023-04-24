@@ -1,10 +1,16 @@
-package sk.fiit.phutumi.models;
+package sk.fiit.phutumi.OfferService.Models;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.data.annotation.Id;
 
 @Entity
 @Table(name = "restaurants")
+@NoArgsConstructor
+@Getter
+@Setter
 public class Restaurant {
 
     @jakarta.persistence.Id
@@ -14,23 +20,4 @@ public class Restaurant {
 
     @Column(name = "name")
     private String name;
-
-    public Restaurant() {
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 }

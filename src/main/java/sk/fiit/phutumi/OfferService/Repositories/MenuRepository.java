@@ -1,6 +1,6 @@
-package sk.fiit.phutumi.Repository;
+package sk.fiit.phutumi.OfferService.Repositories;
 
-import sk.fiit.phutumi.models.Menu;
+import sk.fiit.phutumi.OfferService.Models.Menu;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

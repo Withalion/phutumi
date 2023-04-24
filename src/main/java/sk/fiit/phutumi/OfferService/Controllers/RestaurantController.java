@@ -1,13 +1,13 @@
-package sk.fiit.phutumi.controllers;
+package sk.fiit.phutumi.OfferService.Controllers;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import sk.fiit.phutumi.Repository.RestaurantRepository;
+import sk.fiit.phutumi.OfferService.Repositories.RestaurantRepository;
 
-import sk.fiit.phutumi.models.Restaurant;
+import sk.fiit.phutumi.OfferService.Models.Restaurant;
 
 import java.util.List;
 import java.util.logging.Logger;
@@ -20,7 +20,7 @@ public class RestaurantController {
 
     public static final Logger LOGGER = Logger.getLogger(RestaurantController.class.getName());
 
-    @GetMapping("/phutumi/restaurants")
+    @GetMapping("/restaurants")
     public ResponseEntity<List<Restaurant>> restaurantsOffer() {
 
         List<Restaurant> restaurants = restaurantRepository.findAll();
