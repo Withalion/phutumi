@@ -1,0 +1,24 @@
+{
+  "components": [
+    {
+      "label": "Select",
+      "type": "select",
+      "layout": {
+        "row": "Row_0gn2qyl",
+        "columns": null
+      },
+      "id": "Field_18s6g29",
+      "key": "input",
+      "valuesKey": "input"
+    }
+  ],
+  "type": "default",
+  "id": "Food_form",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.10.0"
+  },
+  "executionPlatform": "Camunda Platform",
+  "executionPlatformVersion": "7.19.0",
+  "schemaVersion": 8
+}
