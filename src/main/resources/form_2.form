@@ -4,17 +4,17 @@
       "label": "Select",
       "type": "select",
       "layout": {
-        "row": "Row_0gn2qyl",
+        "row": "Row_14wlpux",
         "columns": null
       },
-      "id": "Field_18s6g29",
-      "key": "restaurant",
-      "valuesKey": "restaurants",
-      "searchable": false
+      "id": "Field_113xuhs",
+      "key": "order",
+      "defaultValue": "<none>",
+      "valuesKey": "orders"
     }
   ],
   "type": "default",
-  "id": "Form1",
+  "id": "Form2",
   "exporter": {
     "name": "Camunda Modeler",
     "version": "5.10.0"

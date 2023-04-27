@@ -1,6 +1,7 @@
 package sk.fiit.phutumi.controllers;
 
 import javax.inject.Named;
+
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
 import org.camunda.spin.plugin.variable.SpinValues;
@@ -9,35 +10,34 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
-import java.util.LinkedHashMap;
-import java.util.List;
+import java.util.*;
 
-@Named("printrest")
+@Named("restaurants")
 @Service
-public class PrintFood implements JavaDelegate {
+public class RestaurantsCamunda implements JavaDelegate {
     WebClient client = WebClient.create("http://localhost:8080/phutumi");
-
-//
     @Override
     public void execute(DelegateExecution delegateExecution){
-        String restaurantId = delegateExecution.getVariable("input").toString();
-        System.out.println("Restaurant ID: " + restaurantId);
+        Mono<List> restaurants = client.get().uri("/restaurants").retrieve().bodyToMono(List.class);
+        List resList = restaurants.block();
 
-        Mono<List> foods = client.get().uri("/food?restaurantId=" + restaurantId).retrieve().bodyToMono(List.class);
-        List foodList = foods.block();
+        // ukazka json
+        //[{"label":"Burger King","value":"2"},{"label":"McDonald's","value":"1"},{"label":"Pizza Hut","value":"3"}]
 
         String textToJson = "[";
-        for (int i=0; i<foodList.size();i++){
-            String value = ((LinkedHashMap<?, ?>) foodList.get(i)).get("id").toString();
-            String label = (String) ((LinkedHashMap<?, ?>) foodList.get(i)).get("name");
+        for (int i=0; i<resList.size();i++){
+            String value = ((LinkedHashMap<?, ?>) resList.get(i)).get("id").toString();
+            String label = (String) ((LinkedHashMap<?, ?>) resList.get(i)).get("name");
             textToJson = textToJson.concat("{ \"label\": \""+label+"\", \"value\": \""+value+"\"}");
-            if(i!=foodList.size()-1){
+            if(i!=resList.size()-1){
                 textToJson = textToJson.concat(",");
             }
         }
         textToJson = textToJson.concat("]");
+
+
         JsonValue jsonValue = SpinValues.jsonValue(textToJson).create();;
         System.out.println(jsonValue.getValue());
-        delegateExecution.setVariable("address", jsonValue);
+        delegateExecution.setVariable("restaurants", jsonValue);
     }
 }

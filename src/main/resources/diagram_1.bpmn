@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_01cv20g" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.10.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.19.0">
+  <bpmn:process id="Process_1wu5xxd" name="Process Order" isExecutable="true" camunda:historyTimeToLive="10">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_1vy06ke</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:serviceTask id="Activity_1v5y5ij" name="Get Orders to Process" camunda:class="sk.fiit.phutumi.controllers.OrdersToProcessCamunda">
+      <bpmn:incoming>Flow_1vy06ke</bpmn:incoming>
+      <bpmn:outgoing>Flow_014h1jh</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:userTask id="Activity_0mv0eod" name="Pick Process" camunda:formRef="Form2" camunda:formRefBinding="deployment">
+      <bpmn:extensionElements>
+        <camunda:taskListener class="sk.fiit.phutumi.controllers.OrderToProcessListener" event="complete" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_014h1jh</bpmn:incoming>
+      <bpmn:outgoing>Flow_0rn12yy</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:endEvent id="Event_1hk0d9l">
+      <bpmn:incoming>Flow_02sm7k5</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1vy06ke" sourceRef="StartEvent_1" targetRef="Activity_1v5y5ij" />
+    <bpmn:sequenceFlow id="Flow_014h1jh" sourceRef="Activity_1v5y5ij" targetRef="Activity_0mv0eod" />
+    <bpmn:sequenceFlow id="Flow_0rn12yy" sourceRef="Activity_0mv0eod" targetRef="Activity_1f76tmg" />
+    <bpmn:sequenceFlow id="Flow_02sm7k5" sourceRef="Activity_1f76tmg" targetRef="Event_1hk0d9l" />
+    <bpmn:serviceTask id="Activity_1f76tmg" name="Process Order" camunda:class="sk.fiit.phutumi.controllers.ProcessOrderCamunda">
+      <bpmn:incoming>Flow_0rn12yy</bpmn:incoming>
+      <bpmn:outgoing>Flow_02sm7k5</bpmn:outgoing>
+    </bpmn:serviceTask>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1wu5xxd">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="179" y="99" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_16ijb84_di" bpmnElement="Activity_1v5y5ij">
+        <dc:Bounds x="330" y="77" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1hk0d9l_di" bpmnElement="Event_1hk0d9l">
+        <dc:Bounds x="892" y="99" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_14zyo6l_di" bpmnElement="Activity_1f76tmg">
+        <dc:Bounds x="720" y="77" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0ivpvur_di" bpmnElement="Activity_0mv0eod">
+        <dc:Bounds x="530" y="77" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1vy06ke_di" bpmnElement="Flow_1vy06ke">
+        <di:waypoint x="215" y="117" />
+        <di:waypoint x="330" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_014h1jh_di" bpmnElement="Flow_014h1jh">
+        <di:waypoint x="430" y="117" />
+        <di:waypoint x="530" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_02sm7k5_di" bpmnElement="Flow_02sm7k5">
+        <di:waypoint x="820" y="117" />
+        <di:waypoint x="892" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0rn12yy_di" bpmnElement="Flow_0rn12yy">
+        <di:waypoint x="630" y="117" />
+        <di:waypoint x="720" y="117" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

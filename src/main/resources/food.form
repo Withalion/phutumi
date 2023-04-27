@@ -8,8 +8,29 @@
         "columns": null
       },
       "id": "Field_18s6g29",
-      "key": "input",
-      "valuesKey": "input"
+      "key": "food",
+      "valuesKey": "foods",
+      "properties": {}
+    },
+    {
+      "values": [
+        {
+          "label": "Pay",
+          "value": "true"
+        },
+        {
+          "label": "Add to cart",
+          "value": "false"
+        }
+      ],
+      "label": "Select",
+      "type": "select",
+      "layout": {
+        "row": "Row_14xfnke",
+        "columns": null
+      },
+      "id": "Field_0qzqnli",
+      "key": "payment"
     }
   ],
   "type": "default",

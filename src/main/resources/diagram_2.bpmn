@@ -1,90 +1,164 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_0n03vw7" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.10.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.18.0">
-  <bpmn:process id="Process_1fxd9w4" isExecutable="true" camunda:historyTimeToLive="10">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_0n03vw7" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.10.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.18.0">
+  <bpmn:process id="Process_1fxd9w4" name="Order Food" isExecutable="true" camunda:historyTimeToLive="10">
     <bpmn:startEvent id="StartEvent_1">
       <bpmn:outgoing>Flow_1ogncjt</bpmn:outgoing>
     </bpmn:startEvent>
     <bpmn:sequenceFlow id="Flow_1ogncjt" sourceRef="StartEvent_1" targetRef="Activity_1bs39ia" />
     <bpmn:endEvent id="Event_1if5j44">
-      <bpmn:incoming>Flow_0dry4y1</bpmn:incoming>
+      <bpmn:incoming>Flow_0yneie0</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:serviceTask id="Activity_1bs39ia" name="World" camunda:class="sk.fiit.phutumi.controllers.Hello">
+    <bpmn:serviceTask id="Activity_1bs39ia" name="Get Retaurants" camunda:class="sk.fiit.phutumi.controllers.RestaurantsCamunda">
       <bpmn:extensionElements />
       <bpmn:incoming>Flow_1ogncjt</bpmn:incoming>
       <bpmn:outgoing>Flow_0sins35</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:serviceTask id="Activity_print_food" name="Print Food" camunda:class="sk.fiit.phutumi.controllers.PrintFood">
-      <bpmn:incoming>Flow_18217pi</bpmn:incoming>
+    <bpmn:serviceTask id="Activity_print_food" name="Get Foods" camunda:class="sk.fiit.phutumi.controllers.FoodsCamunda">
+      <bpmn:incoming>Flow_0ksuwl6</bpmn:incoming>
       <bpmn:outgoing>Flow_1503j7g</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:sequenceFlow id="Flow_0sins35" sourceRef="Activity_1bs39ia" targetRef="Activity_0pqi8il" />
-    <bpmn:sequenceFlow id="Flow_18217pi" sourceRef="Activity_0pqi8il" targetRef="Activity_print_food" />
-    <bpmn:userTask id="Activity_0pqi8il" name="print" camunda:formRef="Form1" camunda:formRefBinding="deployment">
+    <bpmn:sequenceFlow id="Flow_18217pi" sourceRef="Activity_0pqi8il" targetRef="Activity_1v28jk4" />
+    <bpmn:userTask id="Activity_0pqi8il" name="Pick a Restaurant" camunda:formRef="Form1" camunda:formRefBinding="deployment">
       <bpmn:extensionElements>
-        <camunda:taskListener class="sk.fiit.phutumi.controllers.Print" event="complete" />
+        <camunda:taskListener class="sk.fiit.phutumi.controllers.RestaurantListener" event="complete" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_0sins35</bpmn:incoming>
       <bpmn:outgoing>Flow_18217pi</bpmn:outgoing>
     </bpmn:userTask>
     <bpmn:sequenceFlow id="Flow_1503j7g" sourceRef="Activity_print_food" targetRef="Activity_Food" />
-    <bpmn:userTask id="Activity_Food" name="Food" camunda:formRef="Food_form" camunda:formRefBinding="deployment">
+    <bpmn:userTask id="Activity_Food" name="Pick a Food" camunda:formRef="Food_form" camunda:formRefBinding="deployment">
       <bpmn:extensionElements>
-        <camunda:taskListener class="sk.fiit.phutumi.controllers.FoodComunda" event="complete" />
+        <camunda:taskListener class="sk.fiit.phutumi.controllers.FoodListener" event="complete" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_1503j7g</bpmn:incoming>
+      <bpmn:incoming>Flow_1e6v2vv</bpmn:incoming>
       <bpmn:outgoing>Flow_0dry4y1</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:sequenceFlow id="Flow_0dry4y1" sourceRef="Activity_Food" targetRef="Event_1if5j44" />
+    <bpmn:sequenceFlow id="Flow_0dry4y1" sourceRef="Activity_Food" targetRef="Gateway_1jxhuor" />
+    <bpmn:exclusiveGateway id="Gateway_1jxhuor" name="Pay or Add to Cart">
+      <bpmn:extensionElements />
+      <bpmn:incoming>Flow_0dry4y1</bpmn:incoming>
+      <bpmn:outgoing>Flow_0edzfy9</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0xnusep</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_0edzfy9" name="Add to cart" sourceRef="Gateway_1jxhuor" targetRef="Activity_1x27sqx">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${payment=="false"}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_0xnusep" name="Pay" sourceRef="Gateway_1jxhuor" targetRef="Activity_0gudr0g">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${payment=="true"}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:serviceTask id="Activity_1v28jk4" name="Create Order" camunda:class="sk.fiit.phutumi.controllers.OrderCamunda">
+      <bpmn:incoming>Flow_18217pi</bpmn:incoming>
+      <bpmn:outgoing>Flow_0ksuwl6</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_0ksuwl6" sourceRef="Activity_1v28jk4" targetRef="Activity_print_food" />
+    <bpmn:serviceTask id="Activity_1x27sqx" name="Add To Cart" camunda:class="sk.fiit.phutumi.controllers.CartCamunda">
+      <bpmn:incoming>Flow_0edzfy9</bpmn:incoming>
+      <bpmn:outgoing>Flow_1e6v2vv</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_1e6v2vv" sourceRef="Activity_1x27sqx" targetRef="Activity_Food" />
+    <bpmn:serviceTask id="Activity_0gudr0g" name="Pay For Order" camunda:class="sk.fiit.phutumi.controllers.PayCamunda">
+      <bpmn:incoming>Flow_0xnusep</bpmn:incoming>
+      <bpmn:outgoing>Flow_0yneie0</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_0yneie0" sourceRef="Activity_0gudr0g" targetRef="Event_1if5j44" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1fxd9w4">
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
-        <dc:Bounds x="179" y="99" width="36" height="36" />
+        <dc:Bounds x="192" y="432" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1if5j44_di" bpmnElement="Event_1if5j44">
-        <dc:Bounds x="1052" y="132" width="36" height="36" />
+        <dc:Bounds x="942" y="102" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0n3vtcd_di" bpmnElement="Activity_1bs39ia">
-        <dc:Bounds x="270" y="77" width="100" height="80" />
+        <dc:Bounds x="160" y="260" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_08xrszs_di" bpmnElement="Activity_print_food">
-        <dc:Bounds x="560" y="77" width="100" height="80" />
+        <dc:Bounds x="780" y="260" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0515y5s_di" bpmnElement="Activity_0pqi8il">
-        <dc:Bounds x="380" y="190" width="100" height="80" />
+        <dc:Bounds x="390" y="400" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0f0y3z5_di" bpmnElement="Activity_Food">
-        <dc:Bounds x="690" y="190" width="100" height="80" />
+        <dc:Bounds x="910" y="470" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1jxhuor_di" bpmnElement="Gateway_1jxhuor" isMarkerVisible="true">
+        <dc:Bounds x="1115" y="295" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1156" y="336" width="67" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1v2ptue_di" bpmnElement="Activity_1v28jk4">
+        <dc:Bounds x="580" y="260" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1vo3al4_di" bpmnElement="Activity_1x27sqx">
+        <dc:Bounds x="930" y="260" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_078vh8t_di" bpmnElement="Activity_0gudr0g">
+        <dc:Bounds x="1090" y="80" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1ogncjt_di" bpmnElement="Flow_1ogncjt">
-        <di:waypoint x="215" y="117" />
-        <di:waypoint x="270" y="117" />
+        <di:waypoint x="210" y="432" />
+        <di:waypoint x="210" y="340" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0sins35_di" bpmnElement="Flow_0sins35">
-        <di:waypoint x="370" y="117" />
-        <di:waypoint x="430" y="117" />
-        <di:waypoint x="430" y="190" />
+        <di:waypoint x="260" y="300" />
+        <di:waypoint x="420" y="300" />
+        <di:waypoint x="420" y="400" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_18217pi_di" bpmnElement="Flow_18217pi">
-        <di:waypoint x="480" y="230" />
-        <di:waypoint x="525" y="230" />
-        <di:waypoint x="525" y="117" />
-        <di:waypoint x="560" y="117" />
+        <di:waypoint x="490" y="440" />
+        <di:waypoint x="630" y="440" />
+        <di:waypoint x="630" y="340" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1503j7g_di" bpmnElement="Flow_1503j7g">
-        <di:waypoint x="660" y="117" />
-        <di:waypoint x="740" y="117" />
-        <di:waypoint x="740" y="190" />
+        <di:waypoint x="830" y="340" />
+        <di:waypoint x="830" y="380" />
+        <di:waypoint x="920" y="380" />
+        <di:waypoint x="920" y="470" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0dry4y1_di" bpmnElement="Flow_0dry4y1">
-        <di:waypoint x="790" y="230" />
-        <di:waypoint x="926" y="230" />
-        <di:waypoint x="926" y="150" />
-        <di:waypoint x="1052" y="150" />
+        <di:waypoint x="1010" y="500" />
+        <di:waypoint x="1140" y="500" />
+        <di:waypoint x="1140" y="345" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0edzfy9_di" bpmnElement="Flow_0edzfy9">
+        <di:waypoint x="1110" y="320" />
+        <di:waypoint x="1110" y="270" />
+        <di:waypoint x="1030" y="270" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1043" y="293" width="54" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0xnusep_di" bpmnElement="Flow_0xnusep">
+        <di:waypoint x="1140" y="295" />
+        <di:waypoint x="1140" y="160" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1145" y="226" width="20" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0ksuwl6_di" bpmnElement="Flow_0ksuwl6">
+        <di:waypoint x="680" y="300" />
+        <di:waypoint x="780" y="300" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1e6v2vv_di" bpmnElement="Flow_1e6v2vv">
+        <di:waypoint x="980" y="340" />
+        <di:waypoint x="980" y="405" />
+        <di:waypoint x="960" y="405" />
+        <di:waypoint x="960" y="470" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0yneie0_di" bpmnElement="Flow_0yneie0">
+        <di:waypoint x="1090" y="120" />
+        <di:waypoint x="978" y="120" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
