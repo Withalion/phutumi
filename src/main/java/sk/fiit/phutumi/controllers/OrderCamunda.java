@@ -19,7 +19,7 @@ public class OrderCamunda implements JavaDelegate {
     WebClient client = WebClient.create("http://localhost:8080/phutumi");
     @Override
     public void execute(DelegateExecution delegateExecution){
-        String restaurantId = delegateExecution.getVariable("restaurant").toString();
+        String restaurantId = delegateExecution.getVariable("restaurantId").toString();
 
         Mono<Order> order = client.post().uri(uriBuilder -> uriBuilder.path("/order").build()).retrieve().bodyToMono(Order.class);
         Order orderVal = order.block();

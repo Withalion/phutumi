@@ -20,7 +20,7 @@ public class FoodsCamunda implements JavaDelegate {
 //
     @Override
     public void execute(DelegateExecution delegateExecution){
-        String restaurantId = delegateExecution.getVariable("restaurant").toString();
+        String restaurantId = delegateExecution.getVariable("restaurantId").toString();
         String orderId = delegateExecution.getVariable("order").toString();
         System.out.println("Restaurant ID: " + restaurantId);
 
@@ -39,8 +39,8 @@ public class FoodsCamunda implements JavaDelegate {
         textToJson = textToJson.concat("]");
         JsonValue jsonValue = SpinValues.jsonValue(textToJson).create();;
         System.out.println(jsonValue.getValue());
-        delegateExecution.setVariable("foods", jsonValue);
-        delegateExecution.setVariable("restaurant", restaurantId);
+        delegateExecution.setVariable("foodsId", jsonValue);
+        delegateExecution.setVariable("restaurantId", restaurantId);
         delegateExecution.setVariable("order", orderId);
     }
 }

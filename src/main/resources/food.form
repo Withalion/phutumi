@@ -8,8 +8,8 @@
         "columns": null
       },
       "id": "Field_18s6g29",
-      "key": "food",
-      "valuesKey": "foods",
+      "key": "foodId",
+      "valuesKey": "foodsId",
       "properties": {}
     },
     {
@@ -30,7 +30,7 @@
         "columns": null
       },
       "id": "Field_0qzqnli",
-      "key": "payment"
+      "key": "toPay"
     }
   ],
   "type": "default",
@@ -40,6 +40,6 @@
     "version": "5.10.0"
   },
   "executionPlatform": "Camunda Platform",
-  "executionPlatformVersion": "7.19.0",
+  "executionPlatformVersion": "7.18.0",
   "schemaVersion": 8
 }

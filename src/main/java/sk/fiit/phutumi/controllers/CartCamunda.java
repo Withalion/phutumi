@@ -25,8 +25,8 @@ public class CartCamunda implements JavaDelegate {
     public void execute(DelegateExecution delegateExecution){
 
         String orderId = delegateExecution.getVariable("order").toString();
-        String restaurantId = delegateExecution.getVariable("restaurant").toString();
-        String foodId = delegateExecution.getVariable("food").toString();
+        String restaurantId = delegateExecution.getVariable("restaurantId").toString();
+        String foodId = delegateExecution.getVariable("foodId").toString();
 
 
 
@@ -35,7 +35,7 @@ public class CartCamunda implements JavaDelegate {
         // ukazka json
         //[{"label":"Burger King","value":"2"},{"label":"McDonald's","value":"1"},{"label":"Pizza Hut","value":"3"}]
 
-        delegateExecution.setVariable("restaurant", restaurantId);
+        delegateExecution.setVariable("restaurantId", restaurantId);
         delegateExecution.setVariable("order", orderId);
     }
 }

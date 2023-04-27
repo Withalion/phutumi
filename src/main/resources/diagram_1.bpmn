@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_01cv20g" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.10.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.19.0">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_01cv20g" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.10.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.18.0">
   <bpmn:process id="Process_1wu5xxd" name="Process Order" isExecutable="true" camunda:historyTimeToLive="10">
     <bpmn:startEvent id="StartEvent_1">
       <bpmn:outgoing>Flow_1vy06ke</bpmn:outgoing>
@@ -36,15 +36,15 @@
         <dc:Bounds x="330" y="77" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0ivpvur_di" bpmnElement="Activity_0mv0eod">
+        <dc:Bounds x="530" y="77" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1hk0d9l_di" bpmnElement="Event_1hk0d9l">
         <dc:Bounds x="892" y="99" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_14zyo6l_di" bpmnElement="Activity_1f76tmg">
         <dc:Bounds x="720" y="77" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0ivpvur_di" bpmnElement="Activity_0mv0eod">
-        <dc:Bounds x="530" y="77" width="100" height="80" />
-        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1vy06ke_di" bpmnElement="Flow_1vy06ke">
         <di:waypoint x="215" y="117" />
@@ -54,13 +54,13 @@
         <di:waypoint x="430" y="117" />
         <di:waypoint x="530" y="117" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_02sm7k5_di" bpmnElement="Flow_02sm7k5">
-        <di:waypoint x="820" y="117" />
-        <di:waypoint x="892" y="117" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0rn12yy_di" bpmnElement="Flow_0rn12yy">
         <di:waypoint x="630" y="117" />
         <di:waypoint x="720" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_02sm7k5_di" bpmnElement="Flow_02sm7k5">
+        <di:waypoint x="820" y="117" />
+        <di:waypoint x="892" y="117" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

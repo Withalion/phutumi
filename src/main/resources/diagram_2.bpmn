@@ -19,7 +19,7 @@
     </bpmn:serviceTask>
     <bpmn:sequenceFlow id="Flow_0sins35" sourceRef="Activity_1bs39ia" targetRef="Activity_0pqi8il" />
     <bpmn:sequenceFlow id="Flow_18217pi" sourceRef="Activity_0pqi8il" targetRef="Activity_1v28jk4" />
-    <bpmn:userTask id="Activity_0pqi8il" name="Pick a Restaurant" camunda:formRef="Form1" camunda:formRefBinding="deployment">
+    <bpmn:userTask id="Activity_0pqi8il" name="Pick a Restaurant" camunda:formRef="Form1" camunda:formRefBinding="latest">
       <bpmn:extensionElements>
         <camunda:taskListener class="sk.fiit.phutumi.controllers.RestaurantListener" event="complete" />
       </bpmn:extensionElements>
@@ -27,7 +27,7 @@
       <bpmn:outgoing>Flow_18217pi</bpmn:outgoing>
     </bpmn:userTask>
     <bpmn:sequenceFlow id="Flow_1503j7g" sourceRef="Activity_print_food" targetRef="Activity_Food" />
-    <bpmn:userTask id="Activity_Food" name="Pick a Food" camunda:formRef="Food_form" camunda:formRefBinding="deployment">
+    <bpmn:userTask id="Activity_Food" name="Pick a Food" camunda:formRef="Food_form" camunda:formRefBinding="latest">
       <bpmn:extensionElements>
         <camunda:taskListener class="sk.fiit.phutumi.controllers.FoodListener" event="complete" />
       </bpmn:extensionElements>
@@ -43,10 +43,10 @@
       <bpmn:outgoing>Flow_0xnusep</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:sequenceFlow id="Flow_0edzfy9" name="Add to cart" sourceRef="Gateway_1jxhuor" targetRef="Activity_1x27sqx">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${payment=="false"}</bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${toPay=="false"}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_0xnusep" name="Pay" sourceRef="Gateway_1jxhuor" targetRef="Activity_0gudr0g">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${payment=="true"}</bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${toPay=="true"}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:serviceTask id="Activity_1v28jk4" name="Create Order" camunda:class="sk.fiit.phutumi.controllers.OrderCamunda">
       <bpmn:incoming>Flow_18217pi</bpmn:incoming>

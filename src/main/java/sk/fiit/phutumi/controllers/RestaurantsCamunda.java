@@ -38,6 +38,6 @@ public class RestaurantsCamunda implements JavaDelegate {
 
         JsonValue jsonValue = SpinValues.jsonValue(textToJson).create();;
         System.out.println(jsonValue.getValue());
-        delegateExecution.setVariable("restaurants", jsonValue);
+        delegateExecution.setVariable("restaurantsId", jsonValue);
     }
 }

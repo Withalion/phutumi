@@ -27,7 +27,7 @@ public class OrdersToProcessCamunda implements JavaDelegate {
         String textToJson = "[";
         for (int i=0; i<ordersList.size();i++){
             String value = ((LinkedHashMap<?, ?>) ordersList.get(i)).get("id").toString();
-            String label = "Order";
+            String label = "Order "+value;
             textToJson = textToJson.concat("{ \"label\": \""+label+"\", \"value\": \""+value+"\"}");
             if(i!=ordersList.size()-1){
                 textToJson = textToJson.concat(",");
