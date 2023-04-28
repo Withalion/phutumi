@@ -8,7 +8,7 @@
       <bpmn:incoming>Flow_1vy06ke</bpmn:incoming>
       <bpmn:outgoing>Flow_014h1jh</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:userTask id="Activity_0mv0eod" name="Pick Process" camunda:formRef="Form2" camunda:formRefBinding="deployment">
+    <bpmn:userTask id="Activity_0mv0eod" name="Pick Order" camunda:formRef="Form2" camunda:formRefBinding="deployment">
       <bpmn:extensionElements>
         <camunda:taskListener class="sk.fiit.phutumi.controllers.OrderToProcessListener" event="complete" />
       </bpmn:extensionElements>
