@@ -13,11 +13,10 @@ import sk.fiit.phutumi.WebService.Models.Order;
 
 import java.util.List;
 
-@RequiredArgsConstructor
 @Controller
 @RequestMapping(path = "/phutumi")
 public class PayingController {
-    private final String paymentServiceURL;
+    private final String paymentServiceURL = "payment-service";
     private final WebClient.Builder webclientBuilder;
 
     @GetMapping("/shoppingCart")
@@ -52,4 +51,7 @@ public class PayingController {
         return "ordersPage";
     }
 
+    public PayingController(WebClient.Builder webclientBuilder) {
+        this.webclientBuilder = webclientBuilder;
+    }
 }

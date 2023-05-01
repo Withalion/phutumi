@@ -13,12 +13,11 @@ import sk.fiit.phutumi.WebService.Models.Order;
 
 import java.util.List;
 
-@RequiredArgsConstructor
 @Controller
 @RequestMapping(path = "/phutumi")
 public class OrderingController {
-    private final String offerServiceURL;
-    private final String orderServiceURL;
+    private final String offerServiceURL = "offer-service";
+    private final String orderServiceURL = "order-service";
     private final Builder webclientBuilder;
 
     @GetMapping("")
@@ -48,5 +47,9 @@ public class OrderingController {
         }catch (WebClientResponseException.BadRequest err2){
             return "badRequest";
         }
+    }
+
+    public OrderingController(Builder webclientBuilder) {
+        this.webclientBuilder = webclientBuilder;
     }
 }
