@@ -13,6 +13,10 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
+  kafka:
+    bootstrap-servers: localhost:9092 # Connect to kafka server
+    consumer:
+      group-id: phutumi
 
 # HTTP Server
 server.port: 7830   # HTTP (Tomcat) port

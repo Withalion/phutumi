@@ -9,6 +9,8 @@ spring:
     enabled: false     # Ignore Eureka dashboard FreeMarker templates
   thymeleaf:
     cache: false       # Allow Thymeleaf templates to be reloaded at runtime
+  kafka:
+    bootstrap-servers: localhost:9092 # Connect to kafka server
 
 # Discovery Server Access
 #  1. DEV ONLY: Reduce the lease renewal interval to speed up registration
