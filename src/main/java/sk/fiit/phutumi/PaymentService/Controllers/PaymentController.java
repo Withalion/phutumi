@@ -73,47 +73,6 @@ public class PaymentController {
             return new ResponseEntity<>(null, HttpStatus.OK);
         }
     }
-    @GetMapping(value = "/payOrder")
-    public @ResponseBody ResponseEntity<Order> payOrder(@RequestParam("orderId") Long orderId) {
-
-        Order orderToPay = orderRepository.findById(orderId).orElse(null);
-
-        if (orderToPay == null){
-            LOGGER.log(Level.INFO, "--- not found order: "+ orderId);
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-        }
-
-        if (!orderToPay.isPaid()) {
-
-            orderToPay.setPaid(true);
-            orderRepository.save(orderToPay);
-            LOGGER.log(Level.INFO, "--- payment processed for order: "+ orderId);
-
-            return new ResponseEntity<>(orderToPay, HttpStatus.OK);
-        }
-        LOGGER.log(Level.INFO, "--- already paid order: "+ orderId);
-        return new ResponseEntity<>(null, HttpStatus.OK);
-    }
-
-    @GetMapping(value = "/processOrder")
-    public @ResponseBody ResponseEntity<Order> processOrder(@RequestParam("orderId") Long orderId) {
-
-        Order orderToPay = orderRepository.findById(orderId).orElse(null);
-
-        if (orderToPay == null){
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-        }
-
-        if (!orderToPay.isProcessed()) {
-
-            orderToPay.setProcessed(true);
-            orderRepository.save(orderToPay);
-            LOGGER.log(Level.INFO, "--- payment processed for order: "+ orderId);
-
-            return new ResponseEntity<>(orderToPay, HttpStatus.OK);
-        }
-        return null;
-    }
 
     @GetMapping(value = "/ordersToProcess")
     public @ResponseBody ResponseEntity<List> getOrdersToProcess() {
